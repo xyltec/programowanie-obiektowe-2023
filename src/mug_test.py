@@ -20,6 +20,7 @@ class MyTestCase(unittest.TestCase):
 
         #assert
         self.assertEqual(self.mug.get_content_amount(), self.mug.capacity)
+        self.assertEqual(self.mug.get_content_type(), 'water')
 
 
 if __name__ == '__main__':
