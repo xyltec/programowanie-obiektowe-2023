@@ -23,7 +23,8 @@ class Mug:
 
         transferred = min(self.capacity - self.__content_amount, content_amount)
         self.__content_amount += transferred
-        self.__content_type = content_type
+        if transferred > 0:
+            self.__content_type = content_type
         if transferred != content_amount:
             raise RuntimeError('Mug overflow')
 
