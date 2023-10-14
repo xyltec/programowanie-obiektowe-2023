@@ -15,7 +15,7 @@ class Mug:
         return self.content_amount
 
     def fill(self, content_type: str, content_amount: float):
-        if content_type != self.content_type and self.content_type == self.NOTHING:
+        if content_type != self.content_type and self.content_type != self.NOTHING:
             raise RuntimeError('Cannot fill the mug with a different type of fluid than already present')
 
         if content_amount < 0:
