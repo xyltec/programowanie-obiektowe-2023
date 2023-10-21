@@ -16,27 +16,44 @@ class ElectionsTest(unittest.TestCase):
         self.assertTrue(self.testee.is_registered(voter))
 
     def test_registered_can_vote(self):
-        pass
+        voter = 'Bob'
+        self.testee.register_voter(voter)
+        self.testee.vote(voter, 'PartyA')
 
     def test_cannot_register_twice(self):
-        pass
+        voter = 'Bob'
+        self.testee.register_voter(voter)
+        with self.assertRaises(RuntimeError):
+            self.testee.register_voter(voter)
 
     def test_vote_twice(self):
         self.testee.register_voter('Bob')
         self.testee.vote('Bob', party='PartyA')
 
         # sprawdzic, ze to wywoluje wyjatek
-        self.testee.vote('Bob', party='PartyA')
-
+        with self.assertRaises(RuntimeError):
+            self.testee.vote('Bob', party='PartyA')
 
     def test_votes_are_reflected_in_party_totals(self):
-        pass
+        self.testee.register_voter('Bob1')
+        self.testee.vote('Bob1', party='PartyA')
+        self.testee.register_voter('Bob2')
+        self.testee.vote('Bob2', party='PartyA')
+        self.testee.register_voter('Bob3')
+        self.testee.vote('Bob3', party='PartyC')
+
+        self.assertEqual(self.testee.get_votes_of_party('PartyA'), 2)
+        self.assertEqual(self.testee.get_votes_of_party('PartyB'), 0)
+        self.assertEqual(self.testee.get_votes_of_party('PartyC'), 1)
 
     def test_cannot_vote_for_nonexistent_party(self):
-        pass
+        self.testee.register_voter('Bob1')
+        with self.assertRaises(RuntimeError):
+            self.testee.vote('Bob1', party='PartyX')
 
     def test_cannot_create_two_parties_with_same_name(self):
-        pass
+        with self.assertRaises(RuntimeError):
+            Constituency(['PartyA', 'PartyA'])
 
     # with validators
     def test_can_create_voter_with_valid_name(self):

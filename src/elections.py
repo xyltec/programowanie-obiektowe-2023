@@ -1,6 +1,9 @@
 class Constituency:
 
     def __init__(self, parties: list[str]):
+        unique_names = set(parties)
+        if len(unique_names) != len(parties):
+            raise RuntimeError('Party names are not unique')
         self.__voted: dict[str, bool] = {}
         self.__parties = parties
         self.__n_parties = len(parties)
@@ -12,24 +15,31 @@ class Constituency:
         self.__voted[voter_name] = False  # not voted
 
     def is_registered(self, voter_name: str) -> bool:
-        pass
+        return voter_name in self.__voted
 
     def can_vote(self, voter_name: str) -> bool:
-        pass
+        if voter_name not in self.__voted:
+            return False
+        if self.__voted[voter_name]:
+            return False
+        return True
 
     def vote(self, voter_name: str, party: str):
         # throws RuntimeError if voter cannot vote, or has already voted
-        if voter_name not in self.__voted:
-            raise RuntimeError('Person cannot vote')
-        if self.__voted[voter_name]:
-            raise RuntimeError('Person already voted')
+        if not self.can_vote(voter_name):
+            raise RuntimeError(f'Person {voter_name} cannot vote')
+
         if party not in self.__parties:
             raise RuntimeError('No such party')
         idx = self.__parties.index(party)
         self.__votes[idx] += 1
+        self.__voted[voter_name] = True
 
     def get_votes_of_party(self, party_name: str) -> int:
-        pass
+        if party_name not in self.__parties:
+            raise RuntimeError('No such party')
+        idx = self.__parties.index(party_name)
+        return self.__votes[idx]
 
     def get_results_as_members_of_parliament(self, parliament_places: int) -> list[int]:
         """
