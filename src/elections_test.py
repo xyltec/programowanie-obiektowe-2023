@@ -22,7 +22,12 @@ class ElectionsTest(unittest.TestCase):
         pass
 
     def test_vote_twice(self):
-        pass
+        self.testee.register_voter('Bob')
+        self.testee.vote('Bob', party='PartyA')
+
+        # sprawdzic, ze to wywoluje wyjatek
+        self.testee.vote('Bob', party='PartyA')
+
 
     def test_votes_are_reflected_in_party_totals(self):
         pass
