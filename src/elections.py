@@ -9,7 +9,13 @@ class Constituency:
         self.__n_parties = len(parties)
         self.__votes = [0] * self.__n_parties
 
+        # kompozycja
+        self.__user_validator = VoterEligibilityValidator()
+
     def register_voter(self, voter_name: str):
+        if not self.__user_validator.is_valid(voter_name):
+            raise RuntimeError('User name is not valid')
+
         if voter_name in self.__voted:
             raise RuntimeError('This person is already registered')
         self.__voted[voter_name] = False  # not voted
@@ -50,9 +56,14 @@ class Constituency:
         return self.__votes
 
 
-class NameValidator:
-    def is_valid(self, name:str) -> bool:
-        pass
+class VoterEligibilityValidator:
+
+    # docelowo:
+    # def is_valid(self, user: User) -> bool:
+
+    def is_valid(self, name: str) -> bool:
+        return len(name) >= 2
+
 
 if __name__ == '__main__':
     con = Constituency(['A', 'B', 'C'])
