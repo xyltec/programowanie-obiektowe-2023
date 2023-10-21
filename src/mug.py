@@ -15,6 +15,13 @@ class Mug:
         return self.__content_amount
 
     def fill(self, content_type: str, content_amount: float):
+        """
+        Fills mug some fluid.
+
+        :param content_type:
+        :param content_amount:
+        :return:
+        """
         if content_type != self.__content_type and self.__content_type != self.NOTHING:
             raise RuntimeError('Cannot fill the mug with a different type of fluid than already present')
 
