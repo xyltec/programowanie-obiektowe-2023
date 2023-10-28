@@ -55,15 +55,25 @@ class ElectionsTest(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             Constituency(['PartyA', 'PartyA'])
 
+    def test_cannot_vote_after_counting(self):
+        # arrange
+        self.testee.register_voter('Bob')
+        self.testee.register_voter('Alice')
+        self.testee.vote('Bob', party='PartyA')
+
+        # act
+        self.testee.get_votes_of_party('PartyA')
+
+        # assert
+        with self.assertRaises(RuntimeError):
+            self.testee.vote('Alice', party='PartyA')   # voting is already over, as votes have been counted
+
     # with validators
     def test_can_create_voter_with_valid_name(self):
         pass
 
     def test_cannot_create_voter_with_invalid_name(self):
         pass
-
-
-
 
 
 if __name__ == '__main__':
