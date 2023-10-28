@@ -8,6 +8,7 @@ class Constituency:
         self.__parties = parties
         self.__n_parties = len(parties)
         self.__votes = [0] * self.__n_parties
+        self.__votes_counted = False
 
         # kompozycja
         self.__user_validator = VoterEligibilityValidator()
@@ -31,6 +32,9 @@ class Constituency:
         return True
 
     def vote(self, voter_name: str, party: str):
+        if self.__votes_counted:
+            raise RuntimeError('Votes already counted; voting is closed')
+
         # throws RuntimeError if voter cannot vote, or has already voted
         if not self.can_vote(voter_name):
             raise RuntimeError(f'Person {voter_name} cannot vote')
@@ -45,6 +49,7 @@ class Constituency:
         if party_name not in self.__parties:
             raise RuntimeError('No such party')
         idx = self.__parties.index(party_name)
+        self.__votes_counted = True
         return self.__votes[idx]
 
     def get_results_as_members_of_parliament(self, parliament_places: int) -> list[int]:
