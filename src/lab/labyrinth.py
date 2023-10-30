@@ -54,6 +54,10 @@ class Labyrinth:
     _also_ plays the role of the "engine" (rooms/actors should only change their attributes via methods
     of this class).
 
+    Note:
+        - an elaborate _wrapper_; does not expose objects of type Actor or Room or their functions (effectively
+          filters their API)
+
     Also: https://en.wikipedia.org/wiki/Cube_(1997_film)
     " It consists of an outer cubical shell or sarcophagus, and the inner cube rooms.
     Each side of the outer shell is 434 feet (132 m) long. The inner cube consists of 263 = 17,576 cubical rooms
