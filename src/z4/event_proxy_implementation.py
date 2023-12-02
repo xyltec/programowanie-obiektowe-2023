@@ -36,6 +36,7 @@ class ConsoleTarget(EventTarget):
     def publishEvent(self, line: LogLine):
         print(line)
 
+
 class FileTarget(EventTarget):
 
     def __init__(self, file_name: str):
@@ -44,7 +45,6 @@ class FileTarget(EventTarget):
     def publishEvent(self, line: LogLine):
         with open(self.file_name, 'a') as f:
             f.write(line.__repr__() + '\n')
-
 
 
 if __name__ == '__main__':

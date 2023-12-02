@@ -1,12 +1,14 @@
 class Door:
+    # to jest "interface"
     def open(self):
-        pass
+        raise NotImplementedError
 
     def close(self):
-        pass
+        raise NotImplementedError
 
 
 class ElectricDoor(Door):
+    # implementacje interfejsu
     def __init__(self):
         self.charge = 10
         self.opened = False
