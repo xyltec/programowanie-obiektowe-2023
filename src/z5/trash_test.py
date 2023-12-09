@@ -18,3 +18,4 @@ class TrashTest(unittest.TestCase):
 
         vals = list(self.testee)
         self.assertEqual(vals, [10, 20])
+
