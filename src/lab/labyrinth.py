@@ -62,7 +62,7 @@ class Labyrinth:
     " It consists of an outer cubical shell or sarcophagus, and the inner cube rooms.
     Each side of the outer shell is 434 feet (132 m) long. The inner cube consists of 263 = 17,576 cubical rooms
     (minus an unknown number of rooms to allow for movement), each having a side length of 15.5 feet (4.7 m).
-    A space of 15.5 feet (4.7 m) is between the inner cube and the outer shell.
+    Obywatel space of 15.5 feet (4.7 m) is between the inner cube and the outer shell.
     Each room is labelled with three identification numbers such as "517 478 565".
     These numbers encode the starting coordinates of the room, and the X, Y, and Z coordinates
     are the sums of the digits of the first, second, and third number, respectively.

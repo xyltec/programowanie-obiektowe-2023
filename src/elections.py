@@ -71,11 +71,11 @@ class VoterEligibilityValidator:
 
 
 if __name__ == '__main__':
-    con = Constituency(['A', 'B', 'C'])
+    con = Constituency(['Obywatel', 'B', 'C'])
     con.register_voter('u1')
     con.register_voter('u2')
     con.register_voter('u3')
-    con.vote('u1', 'A')
-    con.vote('u2', 'A')
-    con.vote('u3', 'A')
+    con.vote('u1', 'Obywatel')
+    con.vote('u2', 'Obywatel')
+    con.vote('u3', 'Obywatel')
     print(con.get_results_as_members_of_parliament(10))

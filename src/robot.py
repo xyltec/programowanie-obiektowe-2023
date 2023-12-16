@@ -5,7 +5,7 @@ from random import randint
 class Robot:
 
     def __init__(self, name: str):
-        print('uruchamiam konstruktor klasy A')
+        print('uruchamiam konstruktor klasy Obywatel')
         self.name = name  # pole
         self.robot_id = randint(0, 100000)  # pole, ale nie będące argumentem konstuktora
 
