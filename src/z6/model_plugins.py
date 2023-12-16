@@ -30,16 +30,16 @@ class SimpleProblem(Problem):
         Q: Stolicą Rwandy jest Kigali ;; N ;; 2 ;; 0
         Q: Stolicą Irlandii jest Dublin ;; Y ;; 1 ;; -1
 
-        - linie zaczynajace się od # są komentarzami
-        - pierwsza linia to konfiguracja testu
-        - kolejne sekcje (oddzielone przez '---') są problemami (Problem)
-        - TEXT jest tekstem problemu
-        - linie zaczynające się od Q: to pytania
-        - każda z linii pytań zawiera, oddzielone przez ;; następujące dane:
-            - tekst pytnia
-            - czy należy na pytanie odpowiedzieć przez 'Y' czy 'N'
-            - jaka jest wartosc poprawnej odpowiedzi
-            - jaka jest wartosć niepoprawnej odpowiedzi
+        # - linie zaczynajace się od # są komentarzami
+        # - pierwsza linia to konfiguracja testu
+        # - kolejne sekcje (oddzielone przez '---') są problemami (Problem)
+        # - TEXT jest tekstem problemu
+        # - linie zaczynające się od Q: to pytania
+        # - każda z linii pytań zawiera, oddzielone przez ;; następujące dane:
+        #     - tekst pytnia
+        #     - czy należy na pytanie odpowiedzieć przez 'Y' czy 'N'
+        #     - jaka jest wartosc poprawnej odpowiedzi
+        #     - jaka jest wartosć niepoprawnej odpowiedzi
         ```
 
         """
