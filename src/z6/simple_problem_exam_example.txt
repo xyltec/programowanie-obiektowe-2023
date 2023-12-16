@@ -10,6 +10,9 @@ TEXT: Następujące informacje nt. stolic są prawdziwe
 Q: Stolicą Rwandy jest Kigali ;; N ;; 2 ;; 0
 Q: Stolicą Irlandii jest Dublin ;; Y ;; 1 ;; -1
 
+
+
+
 ---
 TEXT: Następujące informacje nt. stolic są prawdziwe
 Q: Stolicą Rwandy jest Kigali ;; N ;; 2 ;; 0
