@@ -22,7 +22,8 @@ class Problem:
         # displayed to test taker
         pass
 
-    def parse(self, text_lines: Iterable[str]) -> 'Problem':
+    @staticmethod
+    def parse(text_lines: Iterable[str]) -> 'Problem':
         # proper parse error exceptions (raises ParseError)
         pass
 
@@ -54,22 +55,3 @@ class ExamInstance:
     created_at: datetime
     finished_at: datetime
 
-
-class ExamDriver:
-
-    def load_test(self, file_name: str, problem_class: type):
-        # todo: the `selected_class` should extend Problem
-        # parse exam config
-
-        problems = []
-        # now -- parse the list of problems from file_name, all parsed to the selected problem_class
-
-    def run_test(self):
-        pass
-
-# process of asking question:
-# - system loads problems, selects the list asked to user
-# - for each problem system creates a random permutation (order in which questions are displayed),
-#   and saves the "blank" SubmittedProblemAnswer somewhere (memory)
-# - user sends "list[bool]" (his answers); system computes score, and updates SubmittedProblemAnswer
-#

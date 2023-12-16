@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from model import *
 
 
@@ -5,9 +7,16 @@ class SimpleProblem(Problem):
 
     def render(self) -> bytes:
         # todo: wyświetlić ładnie pytanie na konsoli (razem z treściami odpowiedzi)
-        pass
+        console = ''
+        console += '-' * 30 + '\n'
+        console += self.problem_text + '\n\n'
+        for q in self.questions:
+            console += q.asked_text + '\n'
+        console += '-' * 10 + '\n'
+        return console.encode()
 
-    def parse(self, text_lines: Iterable[str]) -> 'Problem':
+    @staticmethod
+    def parse(text_lines: Iterable[str]) -> list['Problem']:
         # proper parse error exceptions (raises ParseError)
         """
         Whole test is given by a file with the following format:
@@ -43,5 +52,39 @@ class SimpleProblem(Problem):
         ```
 
         """
-        problem = SimpleProblem()
-        return problem
+
+        good_lines = []
+        for ln in text_lines:
+            ln = ln.strip()
+            if ln.startswith('#'): continue
+            if len(ln) == 0: continue
+            good_lines.append(ln)
+
+        lines = good_lines
+
+        if not lines[0].startswith('---'):
+            raise ValueError('first line incorrect (lacks ---)')
+
+        problems = []
+        questions = []
+        problem_text = ''
+        for ln in lines[2:]:
+            if ln.startswith('---'):
+                p = SimpleProblem(uuid4(), questions, problem_text)
+                problems.append(p)
+                # create Question
+                questions = []
+            elif ln.startswith('TEXT:'):
+                problem_text = (ln[5:]).strip()
+            elif ln.startswith('Q:'):
+                zz = (ln[2:]).strip().split(';;')
+                text_ = zz[0]
+                y_n = zz[1].strip()
+                correct_value = int(zz[2])
+                incorrect_value = int(zz[3])
+                q = Question(text_, correct_value, incorrect_value, y_n == 'Y')
+                questions.append(q)
+            else:
+                raise ValueError('wrong format in problem section')
+
+        return problems
