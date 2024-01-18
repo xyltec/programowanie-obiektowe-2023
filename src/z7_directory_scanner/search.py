@@ -57,9 +57,9 @@ if __name__ == '__main__':
     # f = File('', 10, last_modify_time=datetime.now() - timedelta(days=10))
     # print(f.is_older_than(15))
     # print(File.get_file('aparser.py'))
-    selector = Selector(extensions=['zip'])
+    selector = Selector(extensions=['zip','pdf'])
     engine = SearchEngine()
-    files = engine.traverse_path('/home/user', depth=2, selector=selector)
+    files = engine.traverse_path('/home/wrong', depth=2, selector=selector)
     files = sorted(files, key=lambda f: f.size)
     files = files[:20]
     for f in files:
