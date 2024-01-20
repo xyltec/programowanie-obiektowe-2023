@@ -2,33 +2,33 @@ import os
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 
-
-@dataclass
-class Selector:
-    min_size: int = -1
-    older_than_days: int = -1
-    extensions: list[str] = field(default_factory=[])
+from text_tools import file_verbose
+from model import *
 
 
-@dataclass
-class File:
-    path: str
-    size: int
-    last_modify_time: datetime
-
-    def is_older_than(self, days: int) -> bool:
-        return datetime.now() - self.last_modify_time > timedelta(days=days)
-
-    @staticmethod
-    def get_file(path: str) -> 'File':
-        return File(path, os.path.getsize(path), datetime.fromtimestamp(os.path.getmtime(path)))
+def is_accessible(file: str) -> bool:
+    if not os.access(file, os.R_OK):
+        return False
+    return True
+    # todo: does this work ok for folders which are readable, but not executable (cannot enter them)
+    # try:
+    #     if os.path.isfile(file):
+    #         pass
+    #     return True
+    # except PermissionError:
+    #     return False
 
 
 class SearchEngine:
     def traverse_path(self, start_path: str, depth: int, selector: Selector) -> list[File]:
         matching_files = []
+
         for f in os.listdir(start_path):
             full_f = os.path.join(start_path, f)
+
+            if not is_accessible(full_f):
+                continue
+
             if os.path.isfile(full_f):
                 file = File.get_file(full_f)
                 if not file.is_older_than(selector.older_than_days):
@@ -54,13 +54,10 @@ class SearchEngine:
 
 
 if __name__ == '__main__':
-    # f = File('', 10, last_modify_time=datetime.now() - timedelta(days=10))
-    # print(f.is_older_than(15))
-    # print(File.get_file('aparser.py'))
-    selector = Selector(extensions=['zip','pdf'])
+    selector = Selector(extensions=['zip', 'pdf'])
     engine = SearchEngine()
-    files = engine.traverse_path('/home/wrong', depth=2, selector=selector)
-    files = sorted(files, key=lambda f: f.size)
+    files = engine.traverse_path('/home', depth=2, selector=selector)
+    files = sorted(files, key=lambda f: -f.size)
     files = files[:20]
     for f in files:
-        print(f)
+        print(file_verbose(f))
