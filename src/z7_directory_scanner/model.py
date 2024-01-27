@@ -4,13 +4,6 @@ from datetime import datetime, timedelta
 
 
 @dataclass
-class Selector:
-    min_size: int = -1
-    older_than_days: int = -1
-    extensions: list[str] = field(default_factory=[])
-
-
-@dataclass
 class File:
     path: str
     size: int
@@ -23,3 +16,17 @@ class File:
     def get_file(path: str) -> 'File':
         return File(path, os.path.getsize(path), datetime.fromtimestamp(os.path.getmtime(path)))
 
+
+@dataclass
+class Selector:
+    min_size: int = -1
+    older_than_days: int = -1
+    extensions: list[str] = field(default_factory=[])
+
+    def matches(self, file: File) -> bool:
+        return True
+
+
+class HardSelector(Selector):
+    def matches(self, file: File) -> bool:
+        return True

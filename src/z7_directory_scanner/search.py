@@ -1,22 +1,16 @@
-import os
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta
-
-from text_tools import file_verbose
 from model import *
+from text_tools import file_verbose
 
 
 def is_accessible(file: str) -> bool:
     if not os.access(file, os.R_OK):
         return False
+    try:
+        if os.path.isdir(file) and os.listdir(file):
+            pass
+    except PermissionError:
+        return False
     return True
-    # todo: does this work ok for folders which are readable, but not executable (cannot enter them)
-    # try:
-    #     if os.path.isfile(file):
-    #         pass
-    #     return True
-    # except PermissionError:
-    #     return False
 
 
 class SearchEngine:
@@ -54,9 +48,9 @@ class SearchEngine:
 
 
 if __name__ == '__main__':
-    selector = Selector(extensions=['zip', 'pdf'])
+    selector = Selector(extensions=[])
     engine = SearchEngine()
-    files = engine.traverse_path('/home', depth=2, selector=selector)
+    files = engine.traverse_path('/home/wrong', depth=5, selector=selector)
     files = sorted(files, key=lambda f: -f.size)
     files = files[:20]
     for f in files:
