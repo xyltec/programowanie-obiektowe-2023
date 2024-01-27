@@ -34,6 +34,7 @@ class BlikTests(unittest.TestCase):
         blik = self.server.generate_blik_code(auth_token)
 
         self.assertIsNotNone(blik)
+        self.assertEquals(self.server.get_blik_status(blik.code, auth_token), BlikStatus.CREATED)
 
     def test_can_make_payment(self):
         account_id1 = self.server.create_account('kadabra')
@@ -47,12 +48,14 @@ class BlikTests(unittest.TestCase):
         self.assertEquals(self.server.get_funds(auth_code=auth_token_2), 0)
 
         blik = self.server.generate_blik_code(auth_token)
+        self.assertEquals(self.server.get_blik_status(blik.code, auth_token), BlikStatus.CREATED)
         payment_id = self.server.make_payment(receipent_account_id=account_id2, blik_code=blik.code, amount=10,
                                               title='test payment')
 
         self.assertIsNotNone(payment_id)
 
         self.server.confirm_payment(blik_code=blik.code, auth_code=auth_token)
+        self.assertEquals(self.server.get_blik_status(blik.code, auth_token), BlikStatus.USED)
 
         self.assertEquals(self.server.get_funds(auth_code=auth_token), 90)
         self.assertEquals(self.server.get_funds(auth_code=auth_token_2), 10)
