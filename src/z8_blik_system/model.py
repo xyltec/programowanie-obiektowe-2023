@@ -23,13 +23,18 @@ class AuthCode:
 
 
 @dataclass
+class AccountId:
+    id: str
+
+
+@dataclass
 class BlikCode:
     code: str
     status: BlikStatus
     created_at: datetime
     valid_thru: datetime
     updated_at: datetime
-    owner_account_id: str
+    owner_account_id: AccountId
 
 
 @dataclass
@@ -41,7 +46,7 @@ class BlikClientVersion:
 @dataclass
 class Payment:
     payment_id: str
-    receipent_account_id: str
+    receipent_account_id: AccountId
     source_account_id: str
     amount: float
     status: PaymentStatus
@@ -52,7 +57,7 @@ class Payment:
 
 @dataclass
 class Account:
-    account_id: str
+    account_id: AccountId
     password_hash: str
     funds: float
 
