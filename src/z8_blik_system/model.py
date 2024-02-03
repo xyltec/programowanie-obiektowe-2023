@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
+from uuid import UUID
 
 
 class BlikStatus(Enum):
@@ -24,7 +25,7 @@ class AuthCode:
 
 @dataclass
 class AccountId:
-    id: str
+    id: UUID
 
 
 @dataclass
@@ -45,7 +46,7 @@ class BlikClientVersion:
 
 @dataclass
 class Payment:
-    payment_id: str
+    payment_id: UUID
     receipent_account_id: AccountId
     source_account_id: str
     amount: float
