@@ -122,3 +122,5 @@ class BlikTests(unittest.TestCase):
             payment_status = self.server.get_payment_status(payment_id, auth_token_3)  # receipent
 
 
+if __name__ == '__main__':
+    unittest.main()
