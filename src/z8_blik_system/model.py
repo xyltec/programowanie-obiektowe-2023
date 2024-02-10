@@ -18,7 +18,7 @@ class PaymentStatus(Enum):
     EXPIRED = 4
 
 
-@dataclass
+@dataclass(frozen=True)
 class AuthCode:
     code: str
 

@@ -3,6 +3,8 @@ from uuid import uuid4
 from argon2 import PasswordHasher
 
 from model import *
+from errors import BlikUnauthorized
+from toolz import ExpiringDict
 
 
 class BlikServer:
@@ -14,7 +16,7 @@ class BlikServer:
 
         self.__accounts: dict[AccountId, Account] = dict()
         self.__password_hasher = PasswordHasher()
-        # self.__tokens: dict[str] -> UUID  (user who authenticated with this code)
+        self.__tokens: dict[AuthCode, AccountId] = ExpiringDict(ttl=token_expiry_ms)  # todo: generics in python
 
     def create_account(self, password: str) -> AccountId:
         acc_id = AccountId(uuid4())
@@ -49,7 +51,21 @@ class BlikServer:
         pass
 
     def login(self, account_id: AccountId, password: str) -> AuthCode:
-        pass
+        # verify password
+        account = self.__accounts[account_id]
+        verified = self.__password_hasher.verify(account.password_hash, password)
+        if not verified:
+            raise BlikUnauthorized()
+
+        # generate token
+        token = str(uuid4())
+
+        # store token
+        code = AuthCode(token)
+        self.__tokens[code] = account.account_id
+
+        # return token
+        return code
 
     def generate_blik_code(self, auth_code: AuthCode) -> BlikClientVersion:
         pass
