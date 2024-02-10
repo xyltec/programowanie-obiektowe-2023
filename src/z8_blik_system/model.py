@@ -23,7 +23,7 @@ class AuthCode:
     code: str
 
 
-@dataclass
+@dataclass(frozen=True)
 class AccountId:
     id: UUID
 

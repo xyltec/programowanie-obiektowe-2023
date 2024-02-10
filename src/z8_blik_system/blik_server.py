@@ -1,16 +1,26 @@
+from uuid import uuid4
+
+from argon2 import PasswordHasher
+
 from model import *
 
 
 class BlikServer:
 
     def __init__(self, token_expiry_ms: int = 90000):
-        self.accounts = dict()  # account_id -> Account
         self.blik_codes = dict()
         self.payments = dict()
         self.token_expiry_ms = token_expiry_ms
 
+        self.__accounts: dict[AccountId, Account] = dict()
+        self.__password_hasher = PasswordHasher()
+        # self.__tokens: dict[str] -> UUID  (user who authenticated with this code)
+
     def create_account(self, password: str) -> AccountId:
-        pass
+        acc_id = AccountId(uuid4())
+        p_hash = self.__password_hasher.hash(password)
+        self.__accounts[acc_id] = Account(acc_id, p_hash, 0.0)
+        return acc_id
 
     def deposit_funds(self, auth_code: AuthCode, amount: float):
         pass
