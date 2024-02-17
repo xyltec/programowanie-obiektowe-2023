@@ -34,7 +34,7 @@ class TestChargingService(unittest.TestCase):
         )
         self.assertIsNone(session)
         self.assertIsNone(charging_time_seconds)
- def test_stop_charging_successful(self):
+     def test_stop_charging_successful(self):
         session, charging_time_seconds = self.charging_service.start_charging(
             client_id="client1", vin="car1", kwh=30, desired_current_kw=40, charger_position=0
         )
