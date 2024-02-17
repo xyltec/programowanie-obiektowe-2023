@@ -1,5 +1,5 @@
 import unittest
-from test import Charger, ChargingService, ChargerStatus, ChargingStatus, ClientAccount, Car, ChargingSession
+from main import Charger, ChargingService, ChargerStatus, ChargingStatus, ClientAccount, Car, ChargingSession
 
 class TestChargingService(unittest.TestCase):
 
